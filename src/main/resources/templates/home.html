@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang Chủ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .info-box {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .info-box label {
+            font-weight: bold;
+            min-width: 90px;
+        }
+        .info-box input {
+            border: none;
+            background: transparent;
+            flex: 1;
+            padding: 5px;
+        }
+        .password-box {
+            position: relative;
+            width: 100%;
+        }
+        .password-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: gray;
+        }
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #ddd;
+            transition: 0.3s;
+        }
+        .user-avatar:hover {
+            border-color: #007bff;
+        }
+        .modal-footer {
+            justify-content: center;
+        }
+        .es {
+            position: relative;
+            top: -20px;
+            left: -6px;
+        }
+    </style>
+</head>
+<body class="bg-white text-dark">
+
+<!-- Thanh điều hướng -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="fa-solid fa-cloud" style="font-size:50px "></i><span class="es">ES</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/Home">Trang Chủ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">Giới Thiệu</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Dịch Vụ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Liên Hệ</a></li>
+            </ul>
+        </div>
+        <a class="navbar-brand ms-3" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
+            <i class="fa-solid fa-user fs-5"></i>
+        </a>
+        <a class="navbar-brand ms-3" href="#" id="logoutBtn">
+            <i class="fa-solid fa-right-from-bracket fs-5"></i>
+        </a>
+    </div>
+</nav>
+<!-- Carousel -->
+<div id="mainCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+    </div>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/uploads/banner2.png" class="d-block w-100" alt="Banner 1">
+        </div>
+        <div class="carousel-item">
+            <img src="/uploads/banner1.png" class="d-block w-100" alt="Banner 2">
+        </div>
+        <div class="carousel-item">
+            <img src="/uploads/banner3.png" class="d-block w-100" alt="Banner 3">
+            <div class="carousel-caption d-none d-md-block">
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<!-- Add this inside the main content div -->
+<div class="p-4">
+    <h3 class="mb-4 text-center">Tất cả sản phẩm</h3>
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4" id="productsGrid">
+        <!-- Products will be inserted here -->
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="userModalLabel">Thông Tin Người Dùng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <input type="file" id="avatarInput" hidden accept="image/*">
+                <img src="https://via.placeholder.com/150" class="user-avatar mb-3" alt="User Avatar" id="avatarImage">
+
+                <div class="info-box">
+                    <label for="username">User:</label>
+                    <input id="username" type="text" class="form-control" value="Tên người dùng">
+                </div>
+                <div class="info-box">
+                    <label for="email">Email:</label>
+                    <input id="email" type="email" class="form-control" value="Email người dùng" readonly>
+                </div>
+                <div class="info-box password-box">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" class="form-control" value="********">
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script -->
+<script>
+    // Load products in grid layout
+    function loadProducts() {
+        fetch('/admin/products')
+            .then(response => response.json())
+            .then(products => {
+                const productsGrid = document.getElementById('productsGrid');
+                productsGrid.innerHTML = '';
+                products.forEach(product => {
+                    productsGrid.innerHTML += `
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}"
+                                 style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text text-danger fw-bold">
+                                    ${product.price ? product.price.toLocaleString('vi-VN') : '0'} đ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Load products when page loads
+    loadProducts();
+</script>
+<script>
+    // Xử lý đăng xuất
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        // Gọi API logout
+        fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'include' // Để gửi cookies
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Xóa access token từ localStorage
+                    localStorage.clear();
+
+                    // Chuyển hướng về trang đăng nhập
+                    window.location.href = '/login';
+                } else {
+                    throw new Error('Logout failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi đăng xuất');
+            });
+    });
+    //********Modal********
+    //Ẩn password
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        let passwordField = document.getElementById("password");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            this.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            this.classList.replace("fa-eye-slash", "fa-eye");
+        }
+    });
+    //Sự kiên khi click vào avt
+    document.getElementById("avatarImage").addEventListener("click", function() {
+        document.getElementById("avatarInput").click();
+    });
+    //thay đổi avt
+    document.getElementById("avatarInput").addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("avatarImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    //Hiển thị thông tin trên Modal
+    document.addEventListener("DOMContentLoaded", function() {
+        const userModal = document.getElementById('userModal');
+        // Lấy userId từ LocalStore
+        const userData = localStorage.getItem("user"); // Lấy thông tin user từ localStorage
+        const userId = userData ? JSON.parse(userData).id : null; // Trích xuất userId từ dữ liệu
+
+        userModal.addEventListener('show.bs.modal', function() {
+            fetch(`/customer/profile/${userId}`) // Thay 7 bằng userId từ session
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("username").value = data.username || '';
+                    document.getElementById("email").value = data.email || '';
+                    document.getElementById("password").value = data.password || '';
+
+                    // Sử dụng avt_path từ database
+                    const avatarPath = data.avtUrl
+                        ? `${data.avtUrl}`  // đường dẫn tương đối đến thư mục Images
+                        : '/uploads/avatar.jpg';      // ảnh mặc định
+                    document.getElementById("avatarImage").src = avatarPath;
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                    alert("Không thể tải thông tin người dùng");
+                });
+        });
+    });
+    //Sự kiên của nút Lưu
+    document.querySelector('.modal-footer .btn-primary').addEventListener('click', async function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const avatarInput = document.getElementById('avatarInput');
+        const file = avatarInput.files[0];
+        // Lấy userId từ LocalStore
+        const userData = localStorage.getItem("user"); // Lấy thông tin user từ localStorage
+        const userId = userData ? JSON.parse(userData).id : null; // Trích xuất userId từ dữ liệu
+        try {
+            let avatarUrl = null;
+
+            // Xử lý upload avatar nếu có file mới
+            if (file) {
+                const formData = new FormData();
+                // Đặt tên file mới theo username và extension của file
+                const fileExt = file.name.split('.').pop();
+                const newFileName = `${username}.${fileExt}`;
+                formData.append('userId', userId);
+                formData.append('file', file, newFileName);
+
+                // Upload file
+                const uploadResponse = await fetch('/customer/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const uploadResult = await uploadResponse.json();
+                avatarUrl = uploadResult.url; // url sẽ là /uploads/username.ext
+            }
+
+            // Cập nhật thông tin user
+            const updateResponse = await fetch('/customer/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: userId, // Thay bằng userId từ session
+                    username: username,
+                    password: password,
+                    avtUrl: avatarUrl
+                })
+            });
+
+            if (!updateResponse.ok) {
+                throw new Error('Update failed');
+            }
+
+            // Đóng modal và hiển thị thông báo thành công
+            const modal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
+            modal.hide();
+            alert('Cập nhật thông tin thành công!');
+
+            // Reload trang để cập nhật giao diện
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra khi cập nhật thông tin!');
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
